@@ -1,0 +1,11 @@
+派生缓冲区为ByteBuf提供了以专门的方式来呈现其内容的视图，这类视图是通过以下方法被创建的:
+duplicate();
+slice();
+slice(int , int);
+Unpooled.unmodifiableBuffer(...);
+order(ByteOrder);
+readSlice(int);
+每个这些方法都将返回一个新的ByteBuf实例，他具有自己的读索引、写索引和标记索引.其内部存储和JDK的ByteBuffer一样也是共享的
+这使得派生缓冲区的创建成本是很低廉的，但是这也意味着，如果你修改了它的内容，也同时修改了其对应的源实例，所以要小心
+
+ByteBuf复制: 如果需要一个现有缓冲区的真是副本，请使用copy()或者copy(int,int)方法。不同于派生缓冲区，由这个调用所返回的ByteBuf拥有独立的数据副本

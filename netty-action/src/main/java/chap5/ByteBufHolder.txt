@@ -1,0 +1,7 @@
+ByteBufHolder的操作
+    content() 返回由这个ByteBufHolder所持有的ByteBuf
+    copy() 返回这个ByteBufHolder的一个深拷贝，包括一个其所包含的ByteBuf的非共享拷贝
+    duplicate() 返回这个ByteBufHolder的一个浅拷贝，包括一个其所包含的ByteBuf的共享拷贝
+
+
+如果想要实现一个将其有效负载存储在ByteBuf中的消息对象，那么ByteBufHolder将是个不错的选择

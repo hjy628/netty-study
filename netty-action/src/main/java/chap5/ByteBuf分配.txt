@@ -1,0 +1,36 @@
+1. 按需分配：　ByteBufAllocator接口
+    为了降低分配和释放内存的开销，Netty通过interface ByteBufAllocator 实现了(ByteBuf的)池化
+    它可以用来分配我们所描述过的任意类型的ByteBuf实例.使用池化是特定于应用程序的决定，其并不会以任何方式改变ByteBuf API的语义
+
+
+    Nety提供了两种ByteBufAllocator的实现： PooledByteBufAllocator和UnpooledByteBufAllocator
+    前者池化了ByteBuf的实例以提高性能并最大限度地减少内存碎片，此实现使用了一种称为jemalloc的已被大量现代操作系统所采用的高效方法来分配内存，
+    后者的实现不池化ByteBuf实例，并且在每次它被调用时都会返回一个新的实例
+
+
+
+
+
+2. Unpooled缓冲区：可能某些情况下，你未能获取一个到ByteBufAllocator的引用，对于这种情况，Netty提供了一个简单的称为Unpooled的工具类，
+它提供了静态的辅助方法来创建未池化的ByteBuf实例.
+
+bufer();buffer(int initialCapacity); buffer(int initialCapacity,int maxCapacity); 返回一个未池化的基于堆内存存储的ByteBuf
+
+directBuffer(); directBuffer(int initialCapacity); directBuffer(int initialCapacity,int maxCapacity);返回一个未池化的
+基于直接内存存储的ByteBuf
+
+
+wrappedBuffer(); 返回一个包装了给定数据的ByteBuf
+
+
+copiedBuffer(); 返回一个复制了给定数据的ByteBuf
+
+Unpooled类还使得ByteBuf同样可用于那些并不需要Netty的其他组件的非网络项目，使得其他能得益于高性能的可扩展的缓冲区API.
+
+
+
+
+3.ByteBufUtil类:
+
+    ByteBufUtil提供了用于操作ByteBuf的静态的辅助方法，因为这个API是通用的，并且和池化无关，所以这些方法已然在分配类的外部实现
+    这些静态方法中最有价值的可能就是hexdump()方法，它以十六进制的表示形式打印ByteBuf的内容
