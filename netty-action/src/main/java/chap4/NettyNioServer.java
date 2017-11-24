@@ -5,8 +5,6 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
-import io.netty.channel.oio.OioEventLoopGroup;
-import io.netty.channel.sctp.oio.OioSctpServerChannel;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 
@@ -35,6 +33,7 @@ public class NettyNioServer {
                                         @Override
                                         public void channelActive(ChannelHandlerContext ctx) throws Exception {
                                             //将消息写到客户端，并添加ChannelFutureListener以便消息一被写完就关闭连接
+                                            System.out.println("receive");
                                             ctx.writeAndFlush(buf.duplicate()).addListener(ChannelFutureListener.CLOSE);
                                         }
                                     }
@@ -46,6 +45,7 @@ public class NettyNioServer {
         }finally {
             group.shutdownGracefully().sync();  //释放所有的资源
         }
+
 
 
 

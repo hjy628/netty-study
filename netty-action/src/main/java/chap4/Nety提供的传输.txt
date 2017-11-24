@@ -1,0 +1,23 @@
+Netty内置了一些开箱即用的传输
+
+NIO: io.netty.channel.socket.nio
+    使用java.nio.channels包做为基础，基于选择器的方式
+Epoll: io.netty.channel.epoll
+    由JNI驱动的epoll()和非阻塞IO,这个传输支持只有在linux上可用的多种特性，如SO_REUSEPORT,比NIO传输更快，而且是完全非阻塞的
+OIO: io.netty.channel.socket.oio
+    使用java.net包做为基础---使用阻塞流
+Local: io.netty.channel.local
+    可以再VM内部通过管道进行通信的本地传输
+Embedded: io.netty.channel.embedded
+    Embedded传输，允许使用ChannelHandler而又不需要一个真正的基于网络的传输，这在测试ChannelHandler实现时非常有用
+
+
+
+
+NIO 非阻塞IO,选择器模式, java.nio.channels.SelectionKey定义的位模式，这些模式可以组合起来定义一组应用程序正在请求通知的状态变化集
+
+OP_ACCEPT 请求在接受新连接并创建Channel时获得通知
+OP_CONNECT 请求在建立一个连接时获得通知
+OP_READ 请求当数据已经就绪，可以从Channel中读取时获得通知
+OP_WRITE 请求当可以向Channel中写更多的数据时获得通知，这处理了套接字缓冲区被完全填满时的情况，这种情况通常发生在数据的发送速度比远程节点
+可处理的速度更快的时候
