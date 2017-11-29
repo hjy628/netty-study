@@ -1,4 +1,4 @@
-package chap122;
+package chap12;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
